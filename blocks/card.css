@@ -63,8 +63,4 @@
   transition: opacity 0.5s linear;
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
-  .card__name {
-    font-size: 21px;
-  }
-}
+/*removed media query as text size stays at 24px for 320 viewport*/

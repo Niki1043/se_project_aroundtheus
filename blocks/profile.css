@@ -116,7 +116,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    width: 80%;
+    width: 282px; /*set pixel value to Figma width*/
     margin: 0 auto 0 auto;
   }
 
@@ -151,6 +151,10 @@
   .profile__add-button {
     margin-top: 36px;
     width: 100%;
+  }
+
+  .profile__image {
+    margin-right: 0;
   }
 }
 
