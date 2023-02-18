@@ -38,7 +38,16 @@
         </section>
         <section class="cards page__section">
           <ul class="cards__list">
-            <li class="card">
+            <template id="card-template">
+              <li class="card">
+                <img class="card__image" src="" alt="" />
+                <div class="card__description">
+                  <h2 class="card__name"></h2>
+                  <button type="button" class="card__like-button"></button>
+                </div>
+              </li>
+            </template>
+            <!--<li class="card">
               <img
                 src="./images/yosemite.jpg"
                 alt="Yoesmite_Image"
@@ -103,7 +112,7 @@
                 <h2 class="card__name">Lago di Braies</h2>
                 <button type="button" class="card__like-button"></button>
               </div>
-            </li>
+            </li>-->
           </ul>
         </section>
       </main>
@@ -129,7 +138,7 @@
             name="description"
             placeholder="Description"
           />
-          <button class="modal__button">Save</button>
+          <button type="submit" class="modal__button">Save</button>
         </form>
       </div>
     </div>

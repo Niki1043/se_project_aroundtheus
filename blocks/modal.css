@@ -12,6 +12,8 @@
 }
 
 .modal_opened {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -37,6 +39,142 @@
   cursor: pointer;
 }
 
+.modal__close:hover {
+  opacity: 0.6;
+  -webkit-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
 .modal__heading {
   color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.modal__title {
+  border: none;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+  width: 100%;
+  padding-bottom: 10px;
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__title::-webkit-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__title::-moz-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__title:-ms-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__title::-ms-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__title::placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description {
+  border: none;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 10px;
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description::-webkit-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description::-moz-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description:-ms-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description::-ms-input-placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__description::placeholder {
+  color: #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.modal__button {
+  width: 100%;
+  height: 50px;
+  margin-top: 48px;
+  border-radius: 2px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.modal__button:hover {
+  opacity: 0.8;
+  -webkit-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
 }
