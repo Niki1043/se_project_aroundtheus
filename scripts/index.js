@@ -25,46 +25,46 @@ const initialCards = [
   },
 ];
 
-//Edit button opens modal
+//Function: Edit button opens modal
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 
-profileEditButton.addEventListener("click", () => {
+function openPopUp() {
   profileEditModal.classList.add("modal_opened");
-});
+}
 
-//Close button closes modal
+//Function: Close button closes modal and click event for X
 const profileModalCloseButton = document.querySelector(".modal__close");
-profileModalCloseButton.addEventListener("click", () => {
+function closePopUp() {
   profileEditModal.classList.remove("modal_opened");
-});
+}
+profileModalCloseButton.addEventListener("click", closePopUp);
 
 //Content from profile populates form placeholders
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-const modalInputNameField = document.querySelector(".modal__title");
-const modalInputDescriptionField = document.querySelector(
-  ".modal__description"
-);
+const modalInputNameField = document.querySelector("#modal-name");
+const modalInputDescriptionField = document.querySelector("#modal-description");
 
 profileEditButton.addEventListener("click", () => {
   modalInputNameField.value = profileName.textContent;
   modalInputDescriptionField.value = profileDescription.textContent;
+  openPopUp();
 });
 
 //User Input updates on profile section
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 profileEditForm.addEventListener("submit", (evt) => {
-  console.log("submit");
   evt.preventDefault();
   profileName.textContent = modalInputNameField.value;
   profileDescription.textContent = modalInputDescriptionField.value;
+  closePopUp();
 });
 
 //Render Cards
 const cardListElement = document.querySelector(".cards__list");
-let userCardTemplate = document.querySelector("#card-template").content;
+const userCardTemplate = document.querySelector("#card-template").content;
 
 function getCardElement(cardData) {
   let cardElement = userCardTemplate.querySelector(".card").cloneNode(true);
