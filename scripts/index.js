@@ -67,13 +67,12 @@ const cardListElement = document.querySelector(".cards__list");
 const userCardTemplate = document.querySelector("#card-template").content;
 
 function getCardElement(cardData) {
-  let cardElement = userCardTemplate.querySelector(".card").cloneNode(true);
-  let cardTitle = cardElement.querySelector(".card__name");
-  let cardImage = cardElement.querySelector(".card__image");
+  const cardElement = userCardTemplate.querySelector(".card").cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__name");
+  const cardImage = cardElement.querySelector(".card__image");
   cardTitle.textContent = cardData.name;
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
-  console.log(cardImage);
   return cardElement;
 }
 
