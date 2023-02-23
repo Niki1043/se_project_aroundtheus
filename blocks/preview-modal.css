@@ -1,4 +1,4 @@
-.preview-modal {
+/*.preview-modal {
   display: block;
   position: fixed;
   z-index: 50;
@@ -12,7 +12,7 @@
   -webkit-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
   -o-transition: visibility 0s linear 0.5s, opacity 0.5s linear;
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
-}
+}*/
 
 .preview-modal__container {
   width: auto;
