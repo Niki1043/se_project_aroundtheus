@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -14,6 +15,8 @@
 .card__image {
   width: 282px;
   height: 282px;
+  display: flex;
+  cursor: pointer;
 }
 
 .card__description {
@@ -63,4 +66,32 @@
   transition: opacity 0.5s linear;
 }
 
-/*removed media query as text size stays at 24px for 320 viewport*/
+.card__like-button_active {
+  background-image: url(../images/like-active.svg);
+}
+
+.card__delete-button {
+  background: transparent url(../images/delete-icon.svg) center no-repeat;
+  position: absolute;
+  border: none;
+  width: 18px;
+  height: 19px;
+  top: 18px;
+  left: 249px;
+  border: none;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.card__delete-button:hover {
+  opacity: 0.5;
+  transition: opacity 0.5s linear;
+}
+
+.card__image-button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}
