@@ -29,7 +29,7 @@ const initialCards = [
 //Profile Modal variables
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileModalCloseButton = document.querySelector(".modal__close");
+const profileModalCloseButton = profileEditModal.querySelector(".modal__close");
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const modalInputNameField = document.querySelector("#modal-name");
@@ -80,7 +80,7 @@ const previewModal = document.querySelector("#preview-modal");
 const previewCloseButton = document.querySelector("#preview-close");
 
 //Function to Enlarge cards for preview
-function cardPreview(cardData) {
+function openCardPreview(cardData) {
   const modalImage = document.querySelector(".preview-modal__image");
   modalImage.src = cardData.link;
   modalImage.alt = cardData.name;
@@ -108,7 +108,7 @@ function getCardElement(cardData) {
   });
 
   previewButton.addEventListener("click", () => {
-    cardPreview(cardData);
+    openCardPreview(cardData);
   });
 
   cardTitle.textContent = cardData.name;
@@ -119,8 +119,7 @@ function getCardElement(cardData) {
 }
 
 initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
-  cardListElement.prepend(cardElement);
+  renderCard(cardData);
 });
 
 //Render User Input Card
@@ -135,11 +134,7 @@ function renderCard(cardData) {
 cardModalCloseButton.addEventListener("click", () => {
   closePopUp(cardEditModal);
 });
-//Close Popup with Create Button
-profileEditForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  closePopUp(cardEditModal);
-});
+
 //Open Popup with +
 cardEditButton.addEventListener("click", () => {
   openPopUp(cardEditModal);
