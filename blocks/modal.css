@@ -105,7 +105,7 @@
   transition: opacity 0.3s linear;
 }
 
-.modal__input_type_error {
+.modal__error_input_type {
   border-bottom: 1px solid #ff0000;
 }
 
@@ -118,12 +118,13 @@
   opacity: 0;
   color: #ff0000;
   position: absolute;
-  top: calc(100% + 5px);
   transition: opacity 0.3s;
 }
 
 .modal__error_visible {
   opacity: 1;
+  display: block;
+  padding: 5px;
 }
 
 .modal__button_disabled {
