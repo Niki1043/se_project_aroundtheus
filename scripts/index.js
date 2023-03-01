@@ -27,6 +27,7 @@ const initialCards = [
 
 //Profile Modal
 //Profile Modal variables
+const modals = document.querySelectorAll(".modal");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileModalCloseButton = profileEditModal.querySelector(".modal__close");
@@ -37,19 +38,40 @@ const modalInputDescriptionField = document.querySelector("#modal-description");
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 
 //Modal Open and Close Functions
+//Close Popup with Escape key
+function closeEscKeyHandler(evt) {
+  if (evt.key === "Escape") {
+    closePopUp(profileEditModal);
+    closePopUp(cardEditModal);
+  }
+}
+
+//Close Popup with Overlay click
+//All modals -> each modal -> check if target clicked includes modal->returns true if click outside modal popup
+modals.forEach((modal) => {
+  modal.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("modal")) {
+      closePopUp(modal);
+    }
+  });
+});
+
 function openPopUp(modal) {
+  document.addEventListener("keydown", closeEscKeyHandler);
   modal.classList.add("modal_opened");
 }
 
 function closePopUp(modal) {
+  document.removeEventListener("keydown", closeEscKeyHandler);
   modal.classList.remove("modal_opened");
 }
 
 //Profile Modal Event Listeners
-//Close Popup with X
+//Close Popup with X //Add click listener for outside too here with if statement
 profileModalCloseButton.addEventListener("click", () => {
   closePopUp(profileEditModal);
 });
+
 //Profile Content from profile populates form placeholders
 profileEditButton.addEventListener("click", () => {
   modalInputNameField.value = profileName.textContent;
@@ -146,6 +168,7 @@ cardEditForm.addEventListener("submit", (evt) => {
   const link = userInputURL.value;
   renderCard({ name, link });
   closePopUp(cardEditModal);
+  form.reset(); // Added per reviewer sub 2 feedback to reset after submit
 });
 //Close Popup with X
 previewCloseButton.addEventListener("click", () => {

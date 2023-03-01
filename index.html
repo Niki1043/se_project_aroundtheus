@@ -62,21 +62,35 @@
       <div class="modal__container">
         <button class="modal__close"></button>
         <p class="modal__heading">Edit Profile</p>
-        <form class="modal__form">
+        <form class="modal__form" novalidate>
           <input
             class="modal__input"
             id="modal-name"
             type="text"
+            minlength="2"
+            maxlength="40"
             name="title"
             placeholder="Name"
+            required
           />
+          <span
+            class="modal__error modal__input_type_error"
+            id="modal-name-error"
+          ></span>
           <input
             class="modal__input"
             id="modal-description"
             type="text"
+            minlength="2"
+            maxlength="200"
             name="description"
             placeholder="Description"
+            required
           />
+          <span
+            class="modal__error modal__input_type_error"
+            id="modal-description-error"
+          ></span>
           <button type="submit" class="modal__button">Save</button>
         </form>
       </div>
@@ -85,24 +99,39 @@
       <div class="modal__container" id="card-edit-container">
         <button class="modal__close" id="card-edit-close"></button>
         <p class="modal__heading">New Place</p>
-        <form class="modal__form" id="card-edit-form">
+        <form class="modal__form" id="card-edit-form" novalidate>
           <input
             class="modal__input"
             id="cardmodal-name"
             type="text"
+            minlength="1"
+            maxlength="30"
             name="card-title"
             placeholder="Title"
             required
           />
+          <span
+            class="modal__error modal__input_type_error"
+            id="cardmodal-name-error"
+          ></span>
           <input
             class="modal__input"
             id="cardmodal-link"
-            type="text"
+            type="url"
             name="card-imagelink"
             placeholder="Image link"
             required
           />
-          <button type="submit" class="modal__button" id="card-edit-button">
+          <span
+            class="modal__error modal__input_type_error"
+            id="cardmodal-link-error"
+          ></span>
+          <button
+            type="submit"
+            class="modal__button modal__button_disabled"
+            id="card-edit-button"
+            disabled
+          >
             Create
           </button>
         </form>
@@ -123,5 +152,6 @@
       <p class="footer__copyright">© 2023 Around The U.S.</p>
     </footer>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validation.js" defer></script>
   </body>
 </html>
