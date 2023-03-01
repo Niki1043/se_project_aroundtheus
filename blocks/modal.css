@@ -118,7 +118,7 @@
   opacity: 0;
   color: #ff0000;
   position: absolute;
-  top: calc(100%+5px);
+  top: calc(100% + 5px);
   transition: opacity 0.3s;
 }
 
