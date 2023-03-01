@@ -43,6 +43,7 @@ function closeEscKeyHandler(evt) {
   if (evt.key === "Escape") {
     closePopUp(profileEditModal);
     closePopUp(cardEditModal);
+    closePopUp(previewModal);
   }
 }
 
@@ -168,7 +169,7 @@ cardEditForm.addEventListener("submit", (evt) => {
   const link = userInputURL.value;
   renderCard({ name, link });
   closePopUp(cardEditModal);
-  form.reset(); // Added per reviewer sub 2 feedback to reset after submit
+  cardEditForm.reset(); // resets whole form including button - need to only reset the two inputs and keep button state
 });
 //Close Popup with X
 previewCloseButton.addEventListener("click", () => {
