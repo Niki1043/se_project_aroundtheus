@@ -179,8 +179,3 @@ cardEditForm.addEventListener("submit", (evt) => {
 previewCloseButton.addEventListener("click", () => {
   closePopUp(previewModal);
 });
-
-/*cardEditButton.addEventListener("click", () => {
-  disableSubmitButton(cardCreateButton, config);
-  openPopUp(cardEditModal);
-});*/
