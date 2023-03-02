@@ -39,11 +39,10 @@ const profileEditForm = profileEditModal.querySelector(".modal__form");
 
 //Modal Open and Close Functions
 //Close Popup with Escape key
-function closeEscKeyHandler(evt) {
+function handleEscape(evt) {
   if (evt.key === "Escape") {
-    closePopUp(profileEditModal);
-    closePopUp(cardEditModal);
-    closePopUp(previewModal);
+    const openedPopUp = document.querySelector(".modal_opened");
+    closePopUp(openedPopUp);
   }
 }
 
@@ -58,12 +57,12 @@ modals.forEach((modal) => {
 });
 
 function openPopUp(modal) {
-  document.addEventListener("keydown", closeEscKeyHandler);
+  document.addEventListener("keydown", handleEscape);
   modal.classList.add("modal_opened");
 }
 
 function closePopUp(modal) {
-  document.removeEventListener("keydown", closeEscKeyHandler);
+  document.removeEventListener("keydown", handleEscape);
   modal.classList.remove("modal_opened");
 }
 
@@ -98,6 +97,7 @@ const cardListElement = document.querySelector(".cards__list");
 const userCardTemplate = document.querySelector("#card-template").content;
 const userInputCardTitle = cardEditForm.querySelector("#cardmodal-name");
 const userInputURL = cardEditForm.querySelector("#cardmodal-link");
+const cardCreateButton = document.querySelector("#card-edit-button");
 //
 const previewModal = document.querySelector("#preview-modal");
 const previewCloseButton = document.querySelector("#preview-close");
@@ -169,16 +169,18 @@ cardEditForm.addEventListener("submit", (evt) => {
   const link = userInputURL.value;
   renderCard({ name, link });
   closePopUp(cardEditModal);
-  cardEditForm.reset(); // resets whole form including button - need to only reset the two inputs and keep button state
+  //Reset to placeholders only when submit button clicked
+  userInputCardTitle.value = "";
+  userInputURL.value = "";
+  //
+  disableSubmitButton(cardCreateButton, config);
 });
 //Close Popup with X
 previewCloseButton.addEventListener("click", () => {
   closePopUp(previewModal);
 });
 
-//Disable Create button for each new card added
-const cardCreateButton = document.querySelector("#card-edit-button");
-cardEditButton.addEventListener("click", () => {
+/*cardEditButton.addEventListener("click", () => {
   disableSubmitButton(cardCreateButton, config);
   openPopUp(cardEditModal);
-});
+});*/

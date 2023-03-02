@@ -71,9 +71,18 @@ function toggleButtonState(
 
 //Add Input Listener for every input to link showing error message and button state
 function setEventListeners(formElement, options) {
-  const { inputSelector } = options;
+  const { inputSelector, submitButtonSelector } = options;
   const inputElements = [...formElement.querySelectorAll(inputSelector)];
-  const buttonElement = formElement.querySelector(".modal__button");
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+  // here you disable the button when you start the project
+  toggleButtonState(inputElements, buttonElement, options);
+  // here you add the `reset` handler
+  formElement.addEventListener("reset", () => {
+    // `setTimeout` is needed to wait till the form is fully reset and then call `toggleButtonState`
+    setTimeout(() => {
+      toggleButtonState(inputElements, buttonElement, options);
+    }, 0); // it’s enough to put 0 ms here
+  });
   inputElements.forEach((inputElement) => {
     inputElement.addEventListener("input", (evt) => {
       checkInputValidity(formElement, inputElement, options);
