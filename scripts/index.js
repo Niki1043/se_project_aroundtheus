@@ -175,3 +175,10 @@ cardEditForm.addEventListener("submit", (evt) => {
 previewCloseButton.addEventListener("click", () => {
   closePopUp(previewModal);
 });
+
+//Disable Create button for each new card added
+const cardCreateButton = document.querySelector("#card-edit-button");
+cardEditButton.addEventListener("click", () => {
+  disableSubmitButton(cardCreateButton, config);
+  openPopUp(cardEditModal);
+});
