@@ -169,7 +169,7 @@ cardEditForm.addEventListener("submit", (evt) => {
   const link = userInputURL.value;
   renderCard({ name, link });
   closePopUp(cardEditModal);
-  //Reset to placeholders only when submit button clicked
+  //Reset to placeholders only when the submit button is clicked
   userInputCardTitle.value = "";
   userInputURL.value = "";
   //
