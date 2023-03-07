@@ -59,12 +59,11 @@ class Card {
   //add elements and functionality to card
   getView() {
     this._cardElement = this._getTemplate();
-    //generates card
+    //generates card name, image src and alt
     this._cardElement.querySelector(".card__name").textContent = this._name;
-    this._cardElement.querySelector(".card__image").src = this._link;
     this._cardImage = this._cardElement.querySelector(".card__image");
-    this._cardImage.style.backgroundImage = `url(${this._link})`;
-    this._cardElement.querySelector(".card__name").textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     //enables clickHandler functions
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._deleteButton = this._cardElement.querySelector(

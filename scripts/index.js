@@ -93,11 +93,6 @@ closeModals.forEach((closeButton) => {
   closeButton.addEventListener("click", () => closePopUp(closeModal));
 });
 
-//Close with Overlay Click
-modals.forEach((modal) => {
-  modal.addEventListener("mousedown", closePopUpWithOverlayClick);
-});
-
 //--------------------------------------------------
 //Profile Modal Functions
 //Profile Content from profile populates form placeholders

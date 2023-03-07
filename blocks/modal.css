@@ -129,6 +129,12 @@
 
 .modal__button_disabled {
   opacity: 0.2;
+  cursor: default;
+}
+
+/*selects disabled hover button must be after modal__button_disabled*/
+.modal__button_disabled:hover {
+  opacity: 0.2;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
