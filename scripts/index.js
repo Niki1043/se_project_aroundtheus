@@ -120,11 +120,8 @@ const userinfo = new UserInfo({
 console.log(userinfo.getUserInfo()); //Returns object with info
 
 //get input returns object passed into handle form submit - error with the input type
-const profilePopup = new PopupWithForm({
-  popupSelector: "#profile-edit-modal",
-  handleFormSumbit: (values) => {
-    userinfo.setUserInfo(values);
-  },
+const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
+  userinfo.setUserInfo(values);
 });
 console.log(profilePopup);
 

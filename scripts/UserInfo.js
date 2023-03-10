@@ -18,15 +18,15 @@ class UserInfo {
 
   //take in new user data and add to page -> need to add argiments into set user info
   //value is on object so call from the object for name and job
-  setUserInfo({ name, description }) {
+  /*setUserInfo({ name, description }) {
     this._userName.textContent = name;
     this._userDescription.textContent = description;
-  }
+  }*/
 
-  /*setUserInfo(value) {
+  setUserInfo(value) {
     this._userName.textContent = value.name;
     this._userDescription.textContent = value.description;
-  }*/
+  }
 }
 
 export default UserInfo;
