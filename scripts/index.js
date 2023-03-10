@@ -54,11 +54,10 @@ const config = {
 const selectors = {
   cardNameField: "#cardmodal-name",
   cardLinkField: "#cardmodal-link",
-  profileTitleInput: "#modal-name",
-  profileDescriptionInput: "#modal-description",
+  //profileTitleInput: "#modal-name",
+  //profileDescriptionInput: "#modal-description",
   //
-  profileName: ".profile__title",
-  profileDescription: ".profile__description",
+
   profileEditForm: "#profile-edit-modal",
 };
 
@@ -117,13 +116,11 @@ const userinfo = new UserInfo({
   userNameSelector: profileName,
   userJobSelector: profileDescription,
 });
-console.log(userinfo.getUserInfo()); //Returns object with info
 
 //get input returns object passed into handle form submit - error with the input type
 const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
   userinfo.setUserInfo(values);
 });
-console.log(profilePopup);
 
 function openProfileEditForm() {
   userinfo.getUserInfo({
@@ -134,25 +131,48 @@ function openProfileEditForm() {
   profilePopup.open();
 }
 profileEditButton.addEventListener("click", openProfileEditForm);
-////THIS WORKS TO POPULATE
 
-profilePopup.setEventListeners(); //works to get save button working 0- console error for handlformsubmit
-////NEED TO ADD SUBMIT EVENT LISTENER TO SAVE< ESCT AND OVERLAYT
+profilePopup.setEventListeners(); ////ESC AND OVERLAY ARE NOT WORKING WITHIN EVENT LISTENER
 
 //--------------------------------------------------
 //Add Card Functions
+
+//preview Popup (popupSelector)
+const previewPopup = new PopupWithImage("#preview-modal"); //this works
+//Section constructur({ items, renderer }, classSelector)
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (cardData) => {
+      const card = new Card(
+        cardData,
+        "#card-template",
+        (cardName, cardLink) => {
+          previewPopup.open(cardName, cardLink);
+        }
+      );
+      //add to the card section here after getting info
+      //const to generate card
+      //add item
+      cardSection.addItem(card);
+      card.getView();
+    },
+  },
+  ".cards__list"
+);
+
 //Open Popup with
-cardEditButton.addEventListener("click", () => {
+/*cardEditButton.addEventListener("click", () => {
   openPopUp(cardEditModal);
 });
 
-//Render card function
+//Render card function - in section
 function renderCard(data, cardListElement) {
   const card = new createCard(data);
   cardListElement.prepend(card);
 }
 
-//forEach render card
+//forEach render card - in section
 initialCards.forEach(function (data) {
   renderCard(data, cardListElement);
 });
@@ -170,10 +190,11 @@ cardEditForm.addEventListener("submit", (evt) => {
   addFormValidator.toggleButtonState();
 });
 
+//need to edit function to enable handlecardClick for preview -gets added into section
 function createCard(data) {
-  const card = new Card(data, "#card-template");
+  const card = new Card(data, "#card-template"); //add the handle clock function here after updating in card (data) => {.......}
   return card.getView();
-}
+}*/
 
 //--------------------------------------------------
 

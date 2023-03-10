@@ -6,6 +6,7 @@ class Section {
     this._renderer = renderer; //function to create/render data on page
     this._classSelector = document.querySelector(classSelector); //CSS selector for where to embed item
   }
+
   //method to render all elements on page
   renderItems() {
     this._itemsArray.forEach((item) => {
