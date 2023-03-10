@@ -1,12 +1,18 @@
 //Imports
+import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Popup from "./Popup.js";
+import PopupWithForm from "./PopupWithForm.js";
+import PopupWithImage from "./PopupWithImage.js";
+import Section from "./Section.js";
+import UserInfo from "./UserInfo.js";
+
 import {
   handleEscape,
   closePopUpWithOverlayClick,
   openPopUp,
   closePopUp,
 } from "./utils.js";
-import Card from "./Card.js";
 
 //--------------------------------------------------
 const initialCards = [
@@ -45,6 +51,17 @@ const config = {
   errorClass: "modal__error_visible",
 };
 
+const selectors = {
+  cardNameField: "#cardmodal-name",
+  cardLinkField: "#cardmodal-link",
+  profileTitleInput: "#modal-name",
+  profileDescriptionInput: "#modal-description",
+  //
+  profileName: ".profile__title",
+  profileDescription: ".profile__description",
+  profileEditForm: "#profile-edit-modal",
+};
+
 //--------------------------------------------------
 //Profile Modal
 //Profile Modal variables
@@ -57,7 +74,7 @@ const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const modalInputNameField = document.querySelector("#modal-name");
 const modalInputDescriptionField = document.querySelector("#modal-description");
-//const profileEditForm = profileEditModal.querySelector(".modal__form");
+const profileEditForm = profileEditModal.querySelector("#edit-profile-modal");
 
 //Add Cards Modal
 //Card Modal variables
@@ -95,22 +112,35 @@ closeModals.forEach((closeButton) => {
 
 //--------------------------------------------------
 //Profile Modal Functions
-//Profile Content from profile populates form placeholders
-function editProfileButton() {
-  modalInputNameField.value = profileName.textContent;
-  modalInputDescriptionField.value = profileDescription.textContent;
-  openPopUp(profileEditModal);
-}
-
-//Profile User Input updates on profile section
-profileEditModal.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  profileName.textContent = modalInputNameField.value;
-  profileDescription.textContent = modalInputDescriptionField.value;
-  closePopUp(profileEditModal);
+//User Info callback
+const userinfo = new UserInfo({
+  userNameSelector: profileName,
+  userJobSelector: profileDescription,
 });
+console.log(userinfo.getUserInfo()); //Returns object with info
 
-profileEditButton.addEventListener("click", editProfileButton);
+//get input returns object passed into handle form submit - error with the input type
+const profilePopup = new PopupWithForm({
+  popupSelector: "#profile-edit-modal",
+  handleFormSumbit: (values) => {
+    userinfo.setUserInfo(values);
+  },
+});
+console.log(profilePopup);
+
+function openProfileEditForm() {
+  userinfo.getUserInfo({
+    name: (modalInputNameField.value = profileName.textContent),
+    description: (modalInputDescriptionField.value =
+      profileDescription.textContent),
+  });
+  profilePopup.open();
+}
+profileEditButton.addEventListener("click", openProfileEditForm);
+////THIS WORKS TO POPULATE
+
+profilePopup.setEventListeners(); //works to get save button working 0- console error for handlformsubmit
+////NEED TO ADD SUBMIT EVENT LISTENER TO SAVE< ESCT AND OVERLAYT
 
 //--------------------------------------------------
 //Add Card Functions
