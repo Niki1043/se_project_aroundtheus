@@ -136,10 +136,12 @@ profilePopup.setEventListeners(); ////ESC AND OVERLAY ARE NOT WORKING WITHIN EVE
 
 //--------------------------------------------------
 //Add Card Functions
-
 //preview Popup (popupSelector)
 const previewPopup = new PopupWithImage("#preview-modal"); //this works
+
 //Section constructur({ items, renderer }, classSelector)
+//Card constrictor (data, cardSelector, handleCardClick)
+//Popup works - need to add the proper data to it and get it to render on open page
 const cardSection = new Section(
   {
     items: initialCards,
@@ -151,28 +153,36 @@ const cardSection = new Section(
           previewPopup.open(cardName, cardLink);
         }
       );
-      //add to the card section here after getting info
-      //const to generate card
-      //add item
-      cardSection.addItem(card);
-      card.getView();
+      return card.getView();
     },
   },
   ".cards__list"
 );
 
+//////ADD CARD POPUP AND ADD FORM
+///WORKS TO ADD A CARD - NEED TO FIX FOR CONTENTS WHEN ADDED TO FORM
+//const cardPopup = new Popup("#card-edit-modal");
+const addCardPopup = new PopupWithForm("#card-edit-modal", (cardData) => {
+  const newCard = new Card(cardData, "#card-template", () => {
+    previewPopup.open(cardName, cardLink);
+  });
+  cardSection.addItem(newCard.getView());
+});
+
+addCardPopup.setEventListeners();
+
 //Open Popup with
-/*cardEditButton.addEventListener("click", () => {
+cardEditButton.addEventListener("click", () => {
   openPopUp(cardEditModal);
 });
 
-//Render card function - in section
-function renderCard(data, cardListElement) {
+//Render card function - =
+/*function renderCard(data, cardListElement) {
   const card = new createCard(data);
   cardListElement.prepend(card);
 }
 
-//forEach render card - in section
+//forEach render card - in section renderItems function
 initialCards.forEach(function (data) {
   renderCard(data, cardListElement);
 });

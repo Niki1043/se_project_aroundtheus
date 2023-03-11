@@ -37,7 +37,7 @@ class Card {
     });
     //Preview - need to check this
     this._cardImage.addEventListener("click", () => {
-      this._handleCardPreview(previewModal);
+      this._handleCardPreview();
     });
     //Remove this to make it more universal
     /*//Preview
@@ -63,8 +63,9 @@ class Card {
   }
 
   _handleCardPreview() {
-    this._handleCardClick({ name: this._name, link: this._link });
+    this._handleCardClick(this._name, this._link);
   }
+
   /*_handleCardClick({
     name: this._name,link: this._link,
   })*/
