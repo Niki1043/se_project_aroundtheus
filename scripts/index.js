@@ -102,24 +102,11 @@ editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
 //--------------------------------------------------
-//Button Functions from Utils
-//Close all modals with X click
-closeModals.forEach((closeButton) => {
-  const closeModal = closeButton.closest(".modal");
-  closeButton.addEventListener("click", () => closePopUp(closeModal));
-});
-
-//--------------------------------------------------
 //Profile Modal Functions
 //User Info callback
 const userinfo = new UserInfo({
   userNameSelector: profileName,
   userJobSelector: profileDescription,
-});
-
-//get input returns object passed into handle form submit - error with the input type
-const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
-  userinfo.setUserInfo(values);
 });
 
 function openProfileEditForm() {
@@ -132,16 +119,19 @@ function openProfileEditForm() {
 }
 profileEditButton.addEventListener("click", openProfileEditForm);
 
+//get input returns object passed into handle form submit - error with the input type
+const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
+  userinfo.setUserInfo(values);
+});
+
 profilePopup.setEventListeners(); ////ESC AND OVERLAY ARE NOT WORKING WITHIN EVENT LISTENER
 
 //--------------------------------------------------
 //Add Card Functions
 //preview Popup (popupSelector)
-const previewPopup = new PopupWithImage("#preview-modal"); //this works
+const previewPopup = new PopupWithImage("#preview-modal");
 
-//Section constructur({ items, renderer }, classSelector)
-//Card constrictor (data, cardSelector, handleCardClick)
-//Popup works - need to add the proper data to it and get it to render on open page
+//Render Initial Cards
 const cardSection = new Section(
   {
     items: initialCards,
@@ -153,195 +143,23 @@ const cardSection = new Section(
           previewPopup.open(cardName, cardLink);
         }
       );
-      return card.getView();
+      cardSection.addItem(card.getView());
     },
   },
   ".cards__list"
 );
 
-//////ADD CARD POPUP AND ADD FORM
-///WORKS TO ADD A CARD - NEED TO FIX FOR CONTENTS WHEN ADDED TO FORM
-//const cardPopup = new Popup("#card-edit-modal");
+cardSection.renderItems();
+
+//Add new card with add card form
 const addCardPopup = new PopupWithForm("#card-edit-modal", (cardData) => {
-  const newCard = new Card(cardData, "#card-template", () => {
+  const newCard = new Card(cardData, "#card-template", (cardName, cardLink) => {
     previewPopup.open(cardName, cardLink);
   });
   cardSection.addItem(newCard.getView());
 });
 
+//Open card popup with open and click listener
+cardEditButton.addEventListener("click", () => addCardPopup.open());
+
 addCardPopup.setEventListeners();
-
-//Open Popup with
-cardEditButton.addEventListener("click", () => {
-  openPopUp(cardEditModal);
-});
-
-//Render card function - =
-/*function renderCard(data, cardListElement) {
-  const card = new createCard(data);
-  cardListElement.prepend(card);
-}
-
-//forEach render card - in section renderItems function
-initialCards.forEach(function (data) {
-  renderCard(data, cardListElement);
-});
-
-//Update 1st Card with user input
-cardEditForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const name = userInputCardTitle.value;
-  const link = userInputURL.value;
-  renderCard({ name, link }, cardListElement);
-  closePopUp(cardEditModal);
-  //Reset to placeholders only when the submit button is clicked
-  userInputCardTitle.value = "";
-  userInputURL.value = "";
-  addFormValidator.toggleButtonState();
-});
-
-//need to edit function to enable handlecardClick for preview -gets added into section
-function createCard(data) {
-  const card = new Card(data, "#card-template"); //add the handle clock function here after updating in card (data) => {.......}
-  return card.getView();
-}*/
-
-//--------------------------------------------------
-
-//--------------------------------------------------
-//Unused Code
-//Modal Open and Close Functions
-//Close Popup with Escape key - utils
-/*function handleEscape(evt) {
-  if (evt.key === "Escape") {
-    const openedPopUp = document.querySelector(".modal_opened");
-    closePopUp(openedPopUp);
-  }
-}*/
-
-//Close Popup with Overlay click-utils ********TO BE SEEN TO AS NOT FULL FUNCTION************
-//All modals -> each modal -> check if target clicked includes modal->returns true if click outside modal popup
-/*modals.forEach((modal) => {
-  modal.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("modal")) {
-      closePopUp(modal);
-    }
-  });
-});*/
-
-//Utils
-/*function openPopUp(modal) {
-  document.addEventListener("keydown", handleEscape);
-  modal.classList.add("modal_opened");
-}*/
-//Utils
-/*function closePopUp(modal) {
-  document.removeEventListener("keydown", handleEscape);
-  modal.classList.remove("modal_opened");
-}*/
-
-//Profile Modal Event Listeners
-//Close Popup with X //Add click listener for outside too here with if statement
-/*profileModalCloseButton.addEventListener("click", () => {
-  closePopUp(profileEditModal);
-});*/
-
-//Profile Content from profile populates form placeholders
-/*profileEditButton.addEventListener("click", () => {
-  modalInputNameField.value = profileName.textContent;
-  modalInputDescriptionField.value = profileDescription.textContent;
-  openPopUp(profileEditModal);
-});*/
-
-//Profile User Input updates on profile section
-/*profileEditForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  profileName.textContent = modalInputNameField.value;
-  profileDescription.textContent = modalInputDescriptionField.value;
-  closePopUp(profileEditModal);
-});*/
-
-//Function to Enlarge cards for preview
-/*function openCardPreview(cardData) {
-  const modalImage = document.querySelector(".preview-modal__image");
-  modalImage.src = cardData.link;
-  modalImage.alt = cardData.name;
-  const modalTitle = document.querySelector(".preview-modal__caption");
-  modalTitle.textContent = cardData.name;
-  openPopUp(previewModal);
-}*/
-
-//Render Cards Functions
-//Render Cards from initialCards
-//card class get Template use card Element constant breakdown
-/*function getCardElement(cardData) {
-  const cardElement = userCardTemplate.querySelector(".card").cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__name");
-  const cardImage = cardElement.querySelector(".card__image");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  const previewButton = cardElement.querySelector("#preview-button");
-
-  //Card Class setEventListeners
-  deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  //Card Class setEventListeners
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-  //Card Class setEventListeners
-  previewButton.addEventListener("click", () => {
-    openCardPreview(cardData);
-  });
-
-//Generate card
-cardTitle.textContent = cardData.name;
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-
-  return cardElement;
-}*/
-//forEach render card
-/*initialCards.forEach((cardData) => {
-  renderCard(cardData);
-});*/
-
-//Render User Input Card
-//forEach render card
-/*function renderCard(cardData) {
-  const cardElement = getCardElement(cardData);
-  cardListElement.prepend(cardElement);
-}*/
-
-//Needs to be changed here
-//Card Modal Event Listeners
-//Close Popup with X
-/*cardModalCloseButton.addEventListener("click", () => {
-  closePopUp(cardEditModal);
-});*/
-
-//Open Popup with +
-/*cardEditButton.addEventListener("click", () => {
-  openPopUp(cardEditModal);
-});*/
-
-//Update 1st Card with user input
-/*cardEditForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const name = userInputCardTitle.value;
-  const link = userInputURL.value;
-  renderCard({ name, link });
-  closePopUp(cardEditModal);
-  //Reset to placeholders only when the submit button is clicked
-  userInputCardTitle.value = "";
-  userInputURL.value = "";
-  //
-  //disableSubmitButton(cardCreateButton, config);
-  addFormValidator.toggleButtonState();
-});*/
-
-//Close Popup with X
-/*previewCloseButton.addEventListener("click", () => {
-  closePopUp(previewModal);
-});*/

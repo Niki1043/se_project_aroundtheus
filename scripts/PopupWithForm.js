@@ -27,11 +27,11 @@ class PopupWithForm extends Popup {
       this._handleFormSubmit(this._getInputValues()); //pass in values from object with input values
       super.setEventListeners(); //Close with X icon and overlay click
       this.close();
+      this._popupForm.reset(); //reset values of form on close - only works on this child
     });
   }
 
   close() {
-    this._popupForm.reset(); //reset values of form on close - only works on this child
     super.close(); //call close for parent
   }
 }

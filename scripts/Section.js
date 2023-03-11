@@ -16,8 +16,8 @@ class Section {
 
   //method to take DOM element and add to container
   addItem(item) {
-    const newElement = this._renderer(item); //run function to render element
-    this._classSelector.prepend(newElement); //append element to page
+    //const newElement = this._renderer(item); //run function to render element
+    this._classSelector.prepend(item); //append element to page
   }
 }
 
