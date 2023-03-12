@@ -3,7 +3,6 @@ class Popup {
   //add constructor - 1param = popup selector
   constructor({ popupSelector }) {
     this._popupElement = document.querySelector(popupSelector); //CSS selector popup -preview/profile/cardedit
-    //this._closeButton = document.querySelector(".modal__close"); //set CSS selector for closing popups
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
@@ -30,7 +29,10 @@ class Popup {
 
   //add close with overlay function
   _handleOverlayClose = (evt) => {
-    if (evt.target.classList.contains("modal_opened")) {
+    if (
+      evt.target.classList.contains("modal_opened") ||
+      evt.target.classList.contains("modal__close")
+    ) {
       this.close();
     }
   };
@@ -38,18 +40,8 @@ class Popup {
   //Set Event Listeners for X icon and overlay click and Esc
   setEventListeners() {
     //close with icon click and with Esc and overlay click
-    this._popupElement.addEventListener("click", (evt) => {
-      if (evt.target.classList.contains("modal__close")) {
-        this.close();
-      }
-    });
+    this._popupElement.addEventListener("click", this.close());
   }
 }
 
 export default Popup;
-
-//Close all modals with X click
-/*closeModals.forEach((closeButton) => {
-  const closeModal = closeButton.closest(".modal");
-  closeButton.addEventListener("click", () => closePopUp(closeModal));
-});*/

@@ -16,7 +16,6 @@ class PopupWithForm extends Popup {
     this._inputList.forEach((input) => {
       this._formValues[input.name] = input.value;
     });
-    //console.log(this._formValues);
     return this._formValues; // input field data returned as object
   }
 
@@ -37,9 +36,3 @@ class PopupWithForm extends Popup {
 }
 
 export default PopupWithForm;
-
-//index.js - create instance
-/* const newCardPopup = new Popupform("#pass-in-id which is popupselectpr",() => {invoke function with stuff from above})
-newCardPopup.open() //same functions from parent class
-newCardPopup.close()
-*/

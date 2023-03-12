@@ -1,13 +1,3 @@
-//Add Object with list of classes from val.js
-/*const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__error_input_type",
-  errorClass: "modal__error_visible",
-};*/
-
 class FormValidator {
   constructor(config, formElement) {
     this._inputSelector = config.inputSelector;
