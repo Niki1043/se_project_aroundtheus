@@ -2,9 +2,9 @@
 
 class UserInfo {
   //add constructor - take in obj - selectors of two elements
-  constructor({ userNameSelector, userJobSelector }) {
-    this._userName = userNameSelector; //profile title
-    this._userDescription = userJobSelector; //profile description
+  constructor({ userName, userJob }) {
+    this._userName = userName; //profile title
+    this._userDescription = userJob; //profile description
   }
 
   //return object with info about user -> need to return values from there already

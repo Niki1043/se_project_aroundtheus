@@ -31,16 +31,14 @@ addFormValidator.enableValidation();
 //Profile Modal Functions
 //User Info callback
 const userinfo = new UserInfo({
-  userNameSelector: profileName,
-  userJobSelector: profileDescription,
+  userName: profileName,
+  userJob: profileDescription,
 });
 
 function openProfileEditForm() {
-  userinfo.getUserInfo({
-    name: (modalInputNameField.value = profileName.textContent),
-    description: (modalInputDescriptionField.value =
-      profileDescription.textContent),
-  });
+  const { description, title } = userinfo.getUserInfo();
+  modalInputNameField.value = title;
+  modalInputDescriptionField.value = description;
   profilePopup.open();
 }
 
@@ -58,18 +56,24 @@ profilePopup.setEventListeners();
 //preview Popup (popupSelector)
 const previewPopup = new PopupWithImage("#preview-modal");
 
+//Function to createcard called with renderer
+function createCard(cardData) {
+  const createCard = new Card(
+    cardData,
+    "#card-template",
+    (cardName, cardLink) => {
+      previewPopup.open(cardName, cardLink);
+    }
+  );
+  return createCard;
+}
+
 //Render Initial Cards
 const cardSection = new Section(
   {
     items: initialCards,
     renderer: (cardData) => {
-      const card = new Card(
-        cardData,
-        "#card-template",
-        (cardName, cardLink) => {
-          previewPopup.open(cardName, cardLink);
-        }
-      );
+      const card = createCard(cardData);
       cardSection.addItem(card.getView());
     },
   },
@@ -80,9 +84,7 @@ cardSection.renderItems();
 
 //Add new card with add card form
 const addCardPopup = new PopupWithForm("#card-edit-modal", (cardData) => {
-  const newCard = new Card(cardData, "#card-template", (cardName, cardLink) => {
-    previewPopup.open(cardName, cardLink);
-  });
+  const newCard = createCard(cardData);
   cardSection.addItem(newCard.getView());
 });
 

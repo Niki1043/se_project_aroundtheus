@@ -4,7 +4,7 @@ class Section {
   constructor({ items, renderer }, classSelector) {
     this._itemsArray = items; //data array
     this._renderer = renderer; //function to create/render data on page
-    this._classSelector = document.querySelector(classSelector); //CSS selector for where to embed item
+    this._container = document.querySelector(classSelector); //CSS selector for where to embed item
   }
 
   //method to render all elements on page
@@ -16,7 +16,7 @@ class Section {
 
   //method to take DOM element and add to container
   addItem(item) {
-    this._classSelector.prepend(item); //append element to page
+    this._container.prepend(item); //append element to page
   }
 }
 

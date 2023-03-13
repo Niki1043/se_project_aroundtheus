@@ -21,17 +21,17 @@ class PopupWithForm extends Popup {
 
   ///Modify parent set event listeners - add submit ev handler and click event to close icon
   setEventListeners() {
+    super.setEventListeners(); //Close with X icon and overlay click
     this._popupElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues()); //pass in values from object with input values
-      super.setEventListeners(); //Close with X icon and overlay click
       this.close();
-      this._popupForm.reset(); //reset values of form on close - only works on this child
     });
   }
 
   close() {
     super.close(); //call close for parent
+    this._popupForm.reset(); //reset values of form on close - only works on this child
   }
 }
 
