@@ -7,7 +7,7 @@ class Section {
     this._container = document.querySelector(classSelector); //CSS selector for where to embed item
   }
 
-  //method to render all elements on page
+  //method to render all elements on page - changed itemsArray to cards in section for getAPIinfo
   renderItems() {
     cards.forEach((item) => {
       this._renderer(item); //renderer fumction renders each element on page

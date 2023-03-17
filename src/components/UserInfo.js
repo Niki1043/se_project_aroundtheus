@@ -12,15 +12,15 @@ class UserInfo {
   //in index.js, value gets returned to variable
   getUserInfo() {
     return {
-      title: this._userName.textContent,
-      description: this._userDescription.textContent,
+      name: this._userName.textContent, //was title
+      about: this._userDescription.textContent, //was description
       //avatar: this._userAvatar.src,
     };
   }
 
   setUserInfo(value) {
-    this._userName.textContent = value.title;
-    this._userDescription.textContent = value.description;
+    this._userName.textContent = value.name; //was title
+    this._userDescription.textContent = value.about; //was description
     this._userAvatar.src = value.avatar;
     this._userAvatar.alt = value.title;
   }

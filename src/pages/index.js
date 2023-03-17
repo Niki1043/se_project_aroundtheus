@@ -43,9 +43,8 @@ const api = new Api({
 //5. Add new card in cardCreate using addNewCard(name, link) -> added and called in cardForm section --DONE
 //6. Delete card in cardCreate using deleteUserCard(cardId) -> added and called in createCard handleDeleteClick callback function --DONE
 //7. Add/Remove likes in cardCreate using removeCardLikes(cardId)/addCardLikes(cardId) -> added and called in createCard handleLikeClick callback function --DONE
-//8. Update profile pic in avatarPopup using updateProfileAvatar(avatar) -> added and called in avatarPopup
+//8. Update profile pic in avatarPopup using updateProfileAvatar(avatar) -> added and called in avatarPopup --DONE
 //--------------------------------------------------
-//Get user information and card data from server
 
 //--------------------------------------------------
 //Form Validations Instances and function from class
@@ -67,9 +66,9 @@ const userinfo = new UserInfo({
 });
 
 function openProfileEditForm() {
-  const { description, title } = userinfo.getUserInfo();
-  modalInputNameField.value = title;
-  modalInputDescriptionField.value = description;
+  const { name, about } = userinfo.getUserInfo(); //was description, title
+  modalInputNameField.value = name;
+  modalInputDescriptionField.value = about;
   profilePopup.open();
 }
 
