@@ -58,3 +58,13 @@ export const modalInputDescriptionField =
 //Card Constants
 export const cardEditModal = document.querySelector("#card-edit-modal");
 export const cardEditButton = document.querySelector(".profile__add-button");
+
+//-------------------------------------------------------------------------------
+//Profile Avatar Constants
+export const avatarEditModal = document.querySelector(
+  "#profileimage-edit-modal"
+);
+
+export const profileAvatar = document.querySelector("#profileimage-link");
+
+export const avatarButton = document.querySelector(".profile__avatar-edit");

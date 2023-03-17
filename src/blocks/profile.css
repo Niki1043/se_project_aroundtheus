@@ -97,7 +97,7 @@
   transition: opacity 0.3s linear;
 }
 
-.profile__image {
+.profile__avatar {
   height: 120px;
   width: 120px;
   border-radius: 50%;
@@ -105,6 +105,28 @@
   object-fit: cover;
   background-position: center;
   margin-right: 26px;
+  opacity: 1;
+}
+
+.profile__avatar-edit {
+  background: transparent url(../images/editProfileImage.svg) center no-repeat;
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  cursor: pointer;
+  border: none;
+  top: 80px;
+  left: 47px;
+  visibility: hidden;
+}
+
+.profile__avatar-container:hover {
+  opacity: 0.8;
+}
+
+.profile__avatar-container:hover .profile__avatar-edit {
+  visibility: visible;
+  transition: opacity 0.3s linear;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -153,8 +175,12 @@
     width: 100%;
   }
 
-  .profile__image {
+  .profile__avatar {
     margin-right: 0;
+  }
+
+  .profile__avatar-edit {
+    margin-left: 80px;
   }
 }
 
