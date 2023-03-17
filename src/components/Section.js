@@ -1,15 +1,15 @@
 //Section class renders list of elements on page
 class Section {
   //add constructor
-  constructor({ renderer }, classSelector) {
-    //this._itemsArray = items; //data array
+  constructor({ items, renderer }, classSelector) {
+    this._items = items; //data array
     this._renderer = renderer; //function to create/render data on page
     this._container = document.querySelector(classSelector); //CSS selector for where to embed item
   }
 
   //method to render all elements on page - changed itemsArray to cards in section for getAPIinfo
   renderItems() {
-    cards.forEach((item) => {
+    this._items.forEach((item) => {
       this._renderer(item); //renderer fumction renders each element on page
     });
   }

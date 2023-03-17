@@ -9,7 +9,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 import {
-  initialCards,
+  //initialCards,
   config,
   profileEditButton,
   profileEditModal,
@@ -165,9 +165,22 @@ function createCard(cardData) {
   );
   //cardSection.addItem(card.getView());
 }
+/*api.getInitialCards().then((cards) => {
+  const initialCards = cards;
+  console.log(initialCards.type);
+  console.log(initialCards);
+});*/
+
+api.getAPIInfo().then(([userCards, userData]) => {
+  userId = userData._id; //assign ._id to userId variable
+  initialCards = userCards; //shows as in promise so not defined
+  userinfo.setUserInfo(userData);
+});
 
 const cardSection = new Section(
   {
+    items: initialCards,
+    //data is not out yet so not an object to be passed into function yet
     renderer: (cardData) => {
       const newCard = createCard(cardData);
       cardSection.addItem(newCard.getView());
@@ -175,20 +188,7 @@ const cardSection = new Section(
   },
   ".cards__list"
 );
-
-//Render Initial Cards => to be removed for API
-/*const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      const card = createCard(cardData);
-      cardSection.addItem(card.getView());
-    },
-  },
-  ".cards__list"
-);
-
-cardSection.renderItems();*/
+cardSection.renderItems();
 
 //Add new card with add card form
 const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
@@ -214,7 +214,12 @@ addCardPopup.setEventListeners();
 
 //--------------------------------------------------
 //Get user information and card data from server
-api.getAPIInfo().then(([cards, userData]) => {
+/*api.getAPIInfo().then(([cards, userData]) => {
   userId = userData._id; //assign ._id to userId variable
   cardSection.renderItems(cards), userinfo.setUserInfo(userData); //set methods to render cards using card data from API, and user info from API userdata
 });
+/*api.getAPIInfo().then(([userCards, userData]) => {
+  userinfo.setUserInfo(userData);
+  const userId = userData._id;
+  const cards = userCards;
+});*/
