@@ -90,14 +90,18 @@ const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
 });
 
 profilePopup.setEventListeners();
+/////////
+api.getUserInfo().then((data) => {
+  console.log(data.avatar);
+});
 
 //Add Profile Avatar input and set on page
 const avatarPopup = new PopupWithForm("#profileimage-edit-modal", (values) => {
   //1. set timer for button
   api
-    .updateProfileAvatar(values.link)
+    .updateProfileAvatar(values.avatar) //avatar url returned
     .then((data) => {
-      userinfo.setUserInfo(data);
+      userinfo.setUserInfo(data); //updates link, does not render link on page
       avatarPopup.close();
     })
     .catch((err) => {

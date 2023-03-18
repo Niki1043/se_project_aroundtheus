@@ -39,14 +39,11 @@ class Api {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
   //updateProfileInfo(name,about) -> body:name,about (specifically for name and about in string format)
-  updateProfileInfo(name, about) {
+  updateProfileInfo(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        name,
-        about,
-      }),
+      body: JSON.stringify(userData),
     }).then(this._checkResponse);
   }
   //addNewCard(name,link) -> body:name,link(specifically for name and link in string format)
@@ -80,7 +77,7 @@ class Api {
   }
   //updateProfileAvatar(avatar) -> body:avatar (specifically for avatar in string format)
   updateProfileAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/${avatar}`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),

@@ -14,22 +14,16 @@ class UserInfo {
     return {
       name: this._userName.textContent, //was title
       about: this._userDescription.textContent, //was description
-      //avatar: this._userAvatar.src,
+      avatar: this._userAvatar,
     };
   }
 
   setUserInfo(value) {
     this._userName.textContent = value.name; //was title
     this._userDescription.textContent = value.about; //was description
-    this._userAvatar.src = value.avatar;
-    this._userAvatar.alt = value.title;
+    this._userAvatar.src = value.avatar; //this needs to render an image for the link
+    this._userAvatar.alt = value.name;
   }
-
-  //need to get avatar info from return statement - how to do this
-  /*setUserImage(value) {
-    this._userAvatar.src = value.avatar;
-    this._userAvatar.alt = this._userName.textContent;
-  } //No avatar data called*/
 }
 
 export default UserInfo;

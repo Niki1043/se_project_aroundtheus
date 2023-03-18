@@ -10,7 +10,7 @@ class Section {
   //method to render all elements on page - changed itemsArray to cards in section for getAPIinfo
   renderItems() {
     this._items.forEach((item) => {
-      this._renderer(item); //renderer fumction renders each element on page
+      this._renderer(item); //renderer function renders each element on page
     });
   }
 
