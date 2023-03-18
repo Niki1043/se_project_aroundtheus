@@ -115,6 +115,7 @@ avatarPopup.setEventListeners();
 //preview Popup (popupSelector)
 const previewPopup = new PopupWithImage("#preview-modal");
 const deleteCardPopup = new PopupWithConfirmation("#delete-confirm-modal");
+let cardSection;
 
 deleteCardPopup.setEventListeners();
 
@@ -129,15 +130,15 @@ function createCard(cardData) {
     (cardName, cardLink) => {
       previewPopup.open(cardName, cardLink);
     },
-    //handleDeleteClick
+    //handleDeleteClick with callback function to remove specified user card only
     (cardId) => {
       deleteCardPopup.open();
       deleteCardPopup.setSubmitAction(() => {
         api.deleteUserCard(cardId).then(() => {
-          deleteCardPopup.close();
           card.deleteCard();
+          deleteCardPopup.close();
         });
-      }); //callbackfunction to delete card close popup andremove card element
+      });
     },
     //handleLikeClick - to be added to Card.js
     (cardId) => {
@@ -160,51 +161,42 @@ function createCard(cardData) {
             console.log(err);
           });
       }
-      return card;
     }
   );
-  //cardSection.addItem(card.getView());
+  return card;
 }
-/*api.getInitialCards().then((cards) => {
-  const initialCards = cards;
-  console.log(initialCards.type);
-  console.log(initialCards);
-});*/
-
-api.getAPIInfo().then(([userCards, userData]) => {
+//Collects initialCards info from server and renders them on the page
+api.getAPIInfo().then(([userData, userCards]) => {
   userId = userData._id; //assign ._id to userId variable
-  initialCards = userCards; //shows as in promise so not defined
   userinfo.setUserInfo(userData);
+  cardSection = new Section(
+    {
+      items: userCards,
+      renderer: (cardData) => {
+        const newCard = createCard(cardData);
+        cardSection.addItem(newCard.getView());
+      },
+    },
+    ".cards__list"
+  );
+  cardSection.renderItems();
 });
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    //data is not out yet so not an object to be passed into function yet
-    renderer: (cardData) => {
-      const newCard = createCard(cardData);
-      cardSection.addItem(newCard.getView());
-    },
-  },
-  ".cards__list"
-);
-cardSection.renderItems();
-
-//Add new card with add card form
+//Add new card with add card form and render on the page
 const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
   //1. setup timer button
   api
     .addNewCard(values)
     .then((data) => {
-      createCard(data);
-      addCardPopup.close();
+      const addCard = createCard(data); //change to const const add card create card createCard(data)
+      addCardPopup.close(); //close with submit
+      cardSection.addItem(addCard.getView()); //get view
     })
     .catch((err) => {
       console.log(err);
     });
+  cardSection.renderItems(); //add render items to show on page?
   //6. finally turn off timer button
-  //const newCard = createCard(cardData);
-  //cardSection.addItem(newCard.getView());
 });
 
 //Open card popup with open and click listener

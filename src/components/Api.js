@@ -50,14 +50,11 @@ class Api {
     }).then(this._checkResponse);
   }
   //addNewCard(name,link) -> body:name,link(specifically for name and link in string format)
-  addNewCard(name, link) {
+  addNewCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
-      method: "PATCH",
+      method: "POST",
       headers: this._headers,
-      body: JSON.stringify({
-        name,
-        link,
-      }),
+      body: JSON.stringify(cardData),
     }).then(this._checkResponse);
   }
   //deleteUserCard(cardId) ->  _id added to URL in request

@@ -53,11 +53,6 @@ class Card {
     this._likeButton.classList.toggle("card__like-button_active");
   }
 
-  /*_handleCardDelete() {
-    this._cardElement.remove();
-    this._cardElement = null;
-  }*/
-
   _handleCardPreview() {
     this._handleCardClick(this._name, this._link);
   }
