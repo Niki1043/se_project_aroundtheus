@@ -26,7 +26,6 @@ import {
 
 //--------------------------------------------------
 //Setup API baseUrl and headers with token and groupID
-//Used to call methods from Api class for functions
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
   headers: {
@@ -34,17 +33,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-
-//Order to call and get info
-//1. Load user info api.getUserInfo() --DONE in getAPIInfo
-//2. Get initial cards with api.getInitialCards() --DONE in getAPIInfo
-//3. Use getAPIInfo to assign userId, and get info for initial cards and userinfo values -- DONE
-//4. Update Profile info using updateProfileInfo(name,about) -> added and called in profilePopup callback function --DONE
-//5. Add new card in cardCreate using addNewCard(name, link) -> added and called in cardForm section --DONE
-//6. Delete card in cardCreate using deleteUserCard(cardId) -> added and called in createCard handleDeleteClick callback function --DONE
-//7. Add/Remove likes in cardCreate using removeCardLikes(cardId)/addCardLikes(cardId) -> added and called in createCard handleLikeClick callback function --DONE
-//8. Update profile pic in avatarPopup using updateProfileAvatar(avatar) -> added and called in avatarPopup --DONE
-//--------------------------------------------------
 
 //--------------------------------------------------
 //Form Validations Instances and function from class
@@ -65,6 +53,7 @@ const userinfo = new UserInfo({
   userAvatar: profileAvatar, //added for avatar
 });
 
+//Open Profile Edit Popup Form
 function openProfileEditForm() {
   const { name, about } = userinfo.getUserInfo(); //was description, title
   modalInputNameField.value = name;
@@ -74,9 +63,9 @@ function openProfileEditForm() {
 
 profileEditButton.addEventListener("click", openProfileEditForm);
 
-//Add Profile Form input and set on page
+//Add Profile Form Input and render on page
 const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
-  //1. set timer loading up for button
+  profilePopup.isLoadingButtonState(true);
   api
     .updateProfileInfo(values)
     .then((data) => {
@@ -85,19 +74,17 @@ const profilePopup = new PopupWithForm("#profile-edit-modal", (values) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      profilePopup.isLoadingButtonState(false, "Save");
     });
-  // 5. finally turn of timer for button
 });
 
 profilePopup.setEventListeners();
-/////////
-api.getUserInfo().then((data) => {
-  console.log(data.avatar);
-});
 
-//Add Profile Avatar input and set on page
+//Add Profile Avatar Link Input and render on page
 const avatarPopup = new PopupWithForm("#profileimage-edit-modal", (values) => {
-  //1. set timer for button
+  avatarPopup.isLoadingButtonState(true);
   api
     .updateProfileAvatar(values.avatar) //avatar url returned
     .then((data) => {
@@ -106,8 +93,10 @@ const avatarPopup = new PopupWithForm("#profileimage-edit-modal", (values) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      avatarPopup.isLoadingButtonState(false, "Save");
     });
-  //close timer button with finally statement
 });
 
 avatarButton.addEventListener("click", () => avatarPopup.open());
@@ -116,19 +105,21 @@ avatarPopup.setEventListeners();
 
 //--------------------------------------------------
 //Add Card and Popup Instances
-//preview Popup (popupSelector)
+//Preview Popup instance
 const previewPopup = new PopupWithImage("#preview-modal");
+
+//Delete Card instance
 const deleteCardPopup = new PopupWithConfirmation("#delete-confirm-modal");
 let cardSection;
+let userId;
 
 deleteCardPopup.setEventListeners();
 
-let userId;
-//Function to create new card called with renderer - add userId after cardData and before #template
+//Function to create new card called with renderer
 function createCard(cardData) {
   const card = new Card(
-    cardData, //undefined - data to be added to form?
-    userId, //undefined - where is this data coming from?
+    cardData,
+    userId,
     "#card-template",
     //handleCardClick
     (cardName, cardLink) => {
@@ -144,27 +135,37 @@ function createCard(cardData) {
         });
       });
     },
-    //handleLikeClick - to be added to Card.js
+    //handleLikeClick to set heart button state
     (cardId) => {
-      if (card.cardLiked()) {
+      if (card.checkCardLikedState()) {
         api
-          .addCardLikes(cardId)
+          .removeCardLikes(cardId)
           .then((data) => {
-            card.setLikesCounter(data.likes);
+            card.removeCardLike();
+            card.setLikesCounter(data.likes.length);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
         api
-          .removeCardLikes(cardId)
+          .addCardLikes(cardId)
           .then((data) => {
-            card.setLikesCounter(data.likes);
+            card.addCardLike();
+            card.setLikesCounter(data.likes.length);
           })
           .catch((err) => {
             console.log(err);
           });
       }
+    },
+    //loadingLikeCheck - loops through cards and renders server likes on page
+    (cardData) => {
+      cardData.forEach((cardObj) => {
+        if (cardObj._id === userId) {
+          card.addCardLike();
+        }
+      });
     }
   );
   return card;
@@ -188,7 +189,7 @@ api.getAPIInfo().then(([userData, userCards]) => {
 
 //Add new card with add card form and render on the page
 const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
-  //1. setup timer button
+  addCardPopup.isLoadingButtonState(true);
   api
     .addNewCard(values)
     .then((data) => {
@@ -198,24 +199,14 @@ const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      addCardPopup.isLoadingButtonState(false, "Create");
     });
-  cardSection.renderItems(); //add render items to show on page?
-  //6. finally turn off timer button
+  cardSection.renderItems();
 });
 
 //Open card popup with open and click listener
 cardEditButton.addEventListener("click", () => addCardPopup.open());
 
 addCardPopup.setEventListeners();
-
-//--------------------------------------------------
-//Get user information and card data from server
-/*api.getAPIInfo().then(([cards, userData]) => {
-  userId = userData._id; //assign ._id to userId variable
-  cardSection.renderItems(cards), userinfo.setUserInfo(userData); //set methods to render cards using card data from API, and user info from API userdata
-});
-/*api.getAPIInfo().then(([userCards, userData]) => {
-  userinfo.setUserInfo(userData);
-  const userId = userData._id;
-  const cards = userCards;
-});*/

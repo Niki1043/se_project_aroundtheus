@@ -65,6 +65,6 @@ export const avatarEditModal = document.querySelector(
   "#profileimage-edit-modal"
 );
 
-export const profileAvatar = document.querySelector("#profileimage-link");
+export const profileAvatar = document.querySelector(".profile__avatar"); //
 
 export const avatarButton = document.querySelector(".profile__avatar-edit");

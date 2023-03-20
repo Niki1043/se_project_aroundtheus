@@ -7,7 +7,8 @@ class Card {
     cardSelector,
     handleCardClick,
     handleDeleteClick,
-    handleLikeClick
+    handleLikeClick,
+    loadingLikeCheck
   ) {
     this._name = data.name;
     this._link = data.link;
@@ -17,8 +18,9 @@ class Card {
     this._handleCardClick = handleCardClick; //add method to constructor
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
+    this._loadingLikeCheck = loadingLikeCheck; //add to place call back in create card to render likes from server on loading
     this._userId = userId;
-    this._userCardOwnerId = data["owner"]._id; //shows error on index.js local
+    this._userCardOwnerId = data["owner"]._id;
   }
 
   //Add methods for cards here
@@ -62,23 +64,26 @@ class Card {
     this._cardElement = null;
   }
 
-  cardLiked() {
-    return this._likes.some((like) => like._id === this._userId); //checks if values for specific userId in the likes arrat with the same id and returns
-  }
-
-  _setLikeButtonState() {
-    this._cardLikes = this._cardElement.querySelector(".card__likes-counter");
-    this._cardLikes.textContent = this._likes.length;
-    if (this.cardLiked()) {
-      this._likeButton.classList.add("card__like-button_active");
-    } else {
-      this._likeButton.classList.remove("card__like-button_active");
-    }
-  }
-
+  //Setup a click handler for loading likes when loading the page
   setLikesCounter(likes) {
     this._likes = likes;
-    this._setLikeButtonState();
+    this._cardLikes.textContent = likes;
+  }
+
+  addCardLike() {
+    this._likeButton.classList.add("card__like-button_active");
+  }
+
+  removeCardLike() {
+    this._likeButton.classList.remove("card__like-button_active");
+  }
+
+  checkCardLikedState() {
+    if (this._likeButton.classList.contains("card__like-button_active")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   //add elements and functionality to card
@@ -89,23 +94,19 @@ class Card {
     this._cardImage = this._cardElement.querySelector(".card__image");
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._cardLikes = this._cardElement.querySelector(".card__likes-counter");
-    this._cardLikes = this._likes.length; //return length of array with count of likes
     //enables clickHandler functions
     this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
     );
     this._previewButton = this._cardElement.querySelector("#preview-button");
+    //Like Counter and adding/removing likes
+    this._cardLikes = this._cardElement.querySelector(".card__likes-counter");
+    this._loadingLikeCheck(this._likes, this._likeButton);
+    this._cardLikes.textContent = this._likes.length; //return length of array with count of likes
     //If the user has not added the card, remove the delete button on the card
     if (this._userId != this._userCardOwnerId) {
       this._deleteButton.remove();
-    }
-    //if statement for card liked state with button active/inactive
-    if (this.cardLiked()) {
-      this._likeButton.classList.add("card__like-button_active");
-    } else {
-      this._likeButton.classList.remove("card__like-button_active");
     }
     this._setCardEventListeners();
     return this._cardElement;
