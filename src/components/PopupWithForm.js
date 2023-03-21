@@ -35,14 +35,14 @@ class PopupWithForm extends Popup {
     this._popupElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues()); //pass in values from object with input values
-      this.close();
-      this._popupForm.reset();
+      //this.close();
+      //this._popupForm.reset();
     });
   }
 
   close() {
     super.close(); //call close for parent
-    //this._popupForm.reset(); //moved to prevent the card form deleting info with click handler events and only resetting on submit event
+    this._popupForm.reset(); //moved to prevent the card form deleting info with click handler events and only resetting on submit event
   }
 }
 

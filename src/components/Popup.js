@@ -10,14 +10,14 @@ class Popup {
   open() {
     this._popupElement.classList.add("modal_opened");
     document.addEventListener("keydown", this._handleEscClose);
-    document.addEventListener("mousedown", this._handleOverlayClose);
+    //document.addEventListener("mousedown", this._handleOverlayClose);
   }
 
   //public close method
   close() {
     this._popupElement.classList.remove("modal_opened");
     document.removeEventListener("keydown", this._handleEscClose);
-    document.removeEventListener("mousedown", this._handleOverlayClose);
+    //document.removeEventListener("mousedown", this._handleOverlayClose);
   }
 
   //store logic for closing popup with Esc key
@@ -40,7 +40,8 @@ class Popup {
   //Set Event Listeners for X icon and overlay click and Esc
   setEventListeners() {
     //close with icon click and with Esc and overlay click
-    this._popupElement.addEventListener("click", this.close());
+    //this._popupElement.addEventListener("click", this.close());
+    this._popupElement.addEventListener("mousedown", this._handleOverlayClose);
   }
 }
 

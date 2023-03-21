@@ -107,6 +107,7 @@ avatarPopup.setEventListeners();
 //Add Card and Popup Instances
 //Preview Popup instance
 const previewPopup = new PopupWithImage("#preview-modal");
+previewPopup.setEventListeners();
 
 //Delete Card instance
 const deleteCardPopup = new PopupWithConfirmation("#delete-confirm-modal");
@@ -129,10 +130,15 @@ function createCard(cardData) {
     (cardId) => {
       deleteCardPopup.open();
       deleteCardPopup.setSubmitAction(() => {
-        api.deleteUserCard(cardId).then(() => {
-          card.deleteCard();
-          deleteCardPopup.close();
-        });
+        api
+          .deleteUserCard(cardId)
+          .then(() => {
+            card.deleteCard();
+            deleteCardPopup.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     },
     //handleLikeClick to set heart button state
@@ -171,21 +177,26 @@ function createCard(cardData) {
   return card;
 }
 //Collects initialCards info from server and renders them on the page
-api.getAPIInfo().then(([userData, userCards]) => {
-  userId = userData._id; //assign ._id to userId variable
-  userinfo.setUserInfo(userData);
-  cardSection = new Section(
-    {
-      items: userCards,
-      renderer: (cardData) => {
-        const newCard = createCard(cardData);
-        cardSection.addItem(newCard.getView());
+api
+  .getAPIInfo()
+  .then(([userData, userCards]) => {
+    userId = userData._id; //assign ._id to userId variable
+    userinfo.setUserInfo(userData);
+    cardSection = new Section(
+      {
+        items: userCards,
+        renderer: (cardData) => {
+          const newCard = createCard(cardData);
+          cardSection.addItem(newCard.getView());
+        },
       },
-    },
-    ".cards__list"
-  );
-  cardSection.renderItems();
-});
+      ".cards__list"
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Add new card with add card form and render on the page
 const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
@@ -203,7 +214,7 @@ const addCardPopup = new PopupWithForm("#card-edit-modal", (values) => {
     .finally(() => {
       addCardPopup.isLoadingButtonState(false, "Create");
     });
-  cardSection.renderItems();
+  //cardSection.renderItems();
 });
 
 //Open card popup with open and click listener
